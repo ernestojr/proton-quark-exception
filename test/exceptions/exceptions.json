@@ -1,0 +1,10 @@
+{
+  "unknownError": {
+    "description": "Unknown error. Contact webmaster.",
+    "code": 0
+  },
+  "requestBodyInvalid": {
+    "description": "The request body is invalid.",
+    "code": 400
+  }
+}
