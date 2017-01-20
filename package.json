@@ -21,16 +21,16 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/hustlingdevs/proton-quark-exception"
   },
   "keywords": [
-    "Controllers",
     "Proton",
     "Microframework",
-    "Quark"
+    "Quark",
+    "Exception"
   ],
   "bugs": {
-    "url": ""
+    "url": "https://github.com/hustlingdevs/proton-quark-exception/issues"
   },
-  "homepage": ""
+  "homepage": "https://github.com/hustlingdevs/proton-quark-exception"
 }
