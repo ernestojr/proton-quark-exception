@@ -13,6 +13,7 @@
     "mocha-co": "1.17.1-co.1"
   },
   "dependencies": {
+    "chai": "^3.5.0",
     "proton-quark": "^1.0.0",
     "require-all": "^2.0.0"
   },
@@ -21,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hustlingdevs/proton-quark-exception"
+    "url": "git+https://github.com/hustlingdevs/proton-quark-exception.git"
   },
   "keywords": [
     "Proton",

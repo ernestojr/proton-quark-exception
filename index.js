@@ -9,6 +9,23 @@ module.exports = class Exception extends Quark {
   constructor(proton) {
     super(proton)
     proton.app.exceptions = {}
+    this.proton.app.exceptions.catch = function(context, err, withMsg) {
+      let error = err
+      if (err instanceof Error) {
+        error = {
+          "message": err.message,
+          "description": "Unknown error. Contact webmaster.",
+          "code": "unknownError"
+        }
+        context.response.status = 500
+      }
+      proton.log.error(JSON.stringify(error))
+      if (!withMsg) {
+        delete error.message
+      }
+      context.body = error
+      return error
+    }
   }
 
   configure() {
