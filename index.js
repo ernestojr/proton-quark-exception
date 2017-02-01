@@ -9,7 +9,7 @@ module.exports = class Exception extends Quark {
   constructor(proton) {
     super(proton)
     proton.app.exceptions = {}
-    proton.app.exceptions.catch = function(err, withMsg) {
+    this.proton.app.exceptions.catch = function(err, withMsg) {
       let error = err
       if (err instanceof Error) {
         error = {
