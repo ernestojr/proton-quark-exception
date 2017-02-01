@@ -9,7 +9,7 @@ module.exports = class Exception extends Quark {
   constructor(proton) {
     super(proton)
     proton.app.exceptions = {}
-    this.proton.app.exceptions.catch = function(context, err, withMsg) {
+    proton.app.exceptions.catch = function(err, withMsg) {
       let error = err
       if (err instanceof Error) {
         error = {
@@ -17,13 +17,10 @@ module.exports = class Exception extends Quark {
           "description": "Unknown error. Contact webmaster.",
           "code": "unknownError"
         }
-        context.response.status = 500
       }
-      proton.log.error(JSON.stringify(error))
       if (!withMsg) {
         delete error.message
       }
-      context.body = error
       return error
     }
   }
