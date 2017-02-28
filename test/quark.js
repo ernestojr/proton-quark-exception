@@ -14,6 +14,8 @@ const proton = {
 describe('Quark test', () => {
   before(next => {
     const quark = new Quark(proton)
+    quark.configure()
+    quark.validate()
     quark.initialize()
     next()
   })
@@ -26,12 +28,12 @@ describe('Quark test', () => {
   })
   it('handle an unknown error', function() {
     try {
-      throw new Error('this is message')
+      throw new Error('this is an unknown error with option show message active')
     } catch (err) {
-      const error = proton.app.exceptions.catch(err, true)
-      console.log('proton.app.exceptions.catch:', error)
-      expect(error).to.have.deep.property('description', 'Unknown error. Contact webmaster.')
-      expect(error).to.have.deep.property('message', 'this is message')
+      const error = proton.app.exceptions.normalize(err, true)
+      console.log('proton.app.exceptions.normalize:', error)
+      expect(error).to.have.deep.property('description', 'Unknown error. Please contact the API provider for more information.')
+      expect(error).to.have.deep.property('message', 'this is an unknown error with option show message active')
       expect(error).to.have.deep.property('code', 'unknownError')
     }
   })

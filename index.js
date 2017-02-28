@@ -4,29 +4,24 @@ const Quark = require('proton-quark')
 const fs = require('fs')
 const path = require('path')
 
+const CONFIG_FILE = 'config'
+const DEFAULT_CONFIG = {
+  unknownError: {
+    description: 'Unknown error. Please contact the API provider for more information.',
+    code: 'unknownError'
+  }
+}
+
 module.exports = class Exception extends Quark {
 
   constructor(proton) {
     super(proton)
     proton.app.exceptions = {}
-    this.proton.app.exceptions.catch = function(err, withMsg) {
-      let error = err
-      if (err instanceof Error) {
-        error = {
-          "message": err.message,
-          "description": "Unknown error. Contact webmaster.",
-          "code": "unknownError"
-        }
-      }
-      if (!withMsg) {
-        delete error.message
-      }
-      return error
-    }
+    normalize = normalize.bind(this)
   }
 
   configure() {
-    // Nothing to do ....
+    this._configuration()
   }
 
   validate() {
@@ -37,10 +32,18 @@ module.exports = class Exception extends Quark {
     this._initializeExceptions()
   }
 
+  _configuration() {
+    this.config = this._config
+    this.proton.app.exceptions.normalize = normalize
+  }
+
   _initializeExceptions() {
     const exceptions = this._exceptions
     for (let GroupExceptionName in exceptions) {
       const groupExceptions = exceptions[GroupExceptionName]
+      if (GroupExceptionName === CONFIG_FILE) {
+        continue
+      }
       this._initializeGroupException(groupExceptions)
     }
   }
@@ -59,9 +62,29 @@ module.exports = class Exception extends Quark {
     }
   }
 
+  get _config() {
+    const config = path.join(this.proton.app.path, '/exceptions/config.json')
+    return fs.existsSync(config) ? require(config) : DEFAULT_CONFIG
+  }
+
   get _exceptions() {
     const exceptions = path.join(this.proton.app.path, '/exceptions')
     return fs.existsSync(exceptions) ? require('require-all')(exceptions) : {}
   }
 
+}
+
+function normalize(err, withMsg) {
+  let error = err
+  if (err instanceof Error) {
+    error = {
+      "message": err.message,
+      "description": this.config.unknownError.description,
+      "code": this.config.unknownError.code
+    }
+  }
+  if (!withMsg) {
+    delete error.message
+  }
+  return error
 }

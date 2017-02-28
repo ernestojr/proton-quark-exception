@@ -1,0 +1,7 @@
+{
+  "unknownError": {
+    "description": "Unknown error. Please contact the API provider for more information.",
+    "code": "unknownError"
+  },
+  "test": true
+}
