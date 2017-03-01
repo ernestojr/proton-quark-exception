@@ -1,6 +1,4 @@
 # proton-quark-exception
-Middleware to run before controllers and use them with proton microframework
-
 Build functions for handling errors defined in a JSON file for the proton microframework.
 These functions return an object with the structure:
 ```sh
